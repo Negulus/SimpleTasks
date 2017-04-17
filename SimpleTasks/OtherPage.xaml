@@ -1,0 +1,53 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="SimpleTasks.OtherPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded" Unloaded="PhoneApplicationPage_Unloaded">
+    
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="True">
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="AppBar_Set" IsEnabled="True" Text="Настройки" Click="AppBar_Set_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid>
+        <Grid x:Name="LayoutRoot" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="0" x:Name="row_notasks"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="label_title" HorizontalAlignment="Center" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.Other_Title_Completed, Source={StaticResource LocalizedStrings}}" FontSize="32" VerticalAlignment="Top" Height="40"/>
+            <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.Empty, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Center"/>
+            <toolkit:LongListMultiSelector Grid.Row="2" x:Name="List_Tasks" ItemsSource="{Binding}" IsSelectionEnabled="False" IsSelectionEnabledChanged="List_Tasks_IsSelectionEnabledChanged">
+                <toolkit:LongListMultiSelector.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Grid Tag="{Binding item_tag}" Tap="Grid_Tap" Background="#00000000">
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding item_text}" VerticalAlignment="Center"/>
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="12" Text="{Binding item_create_time}" VerticalAlignment="Center"/>
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding item_end_time}" FontSize="12" Visibility="Visible" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </toolkit:LongListMultiSelector.ItemTemplate>
+            </toolkit:LongListMultiSelector>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
